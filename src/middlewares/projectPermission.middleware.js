@@ -3,7 +3,7 @@ import { asyncHandler } from "../utils/async-handler.js";
 import { ProjectMember } from "../models/projectMember.models.js";
 import mongoose from "mongoose";
 
-const validateProjectPermission = (roles = []) => {
+export const validateProjectPermission = (roles = []) => {
     return asyncHandler(async (req,res,next)=>{
         const {projectId} = req.params;
 
