@@ -47,6 +47,7 @@ const createTask = asyncHandler(async(req,res)=>{
     const task = await Task.create({
         title,
         description,
+        project: new mongoose.Types.ObjectId(projectId),
         assignedTo: assignedTo ? new mongoose.Types.ObjectId(assignedTo) : undefined,
         status,
         assignedBy: new mongoose.Types.ObjectId(req.user_id),
