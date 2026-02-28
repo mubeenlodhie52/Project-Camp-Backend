@@ -36,19 +36,19 @@ router.get(
   getTaskById
 );
 
-// UPDATE task
-// router.put(
-//   "/:taskId",
-//   validateProjectPermission([UserRolesEnum.ADMIN]),
-//   updateTask
-// );
 
-// // DELETE task
-// router.delete(
-//   "/:taskId",
-//   validateProjectPermission([UserRolesEnum.ADMIN]),
-//   deleteTask
-// );
+router.put(
+  "/:taskId",
+  validateProjectPermission([UserRolesEnum.ADMIN]),
+  updateTask
+);
+
+
+router.delete(
+  "/:taskId",
+  validateProjectPermission([UserRolesEnum.ADMIN]),
+  deleteTask
+);
 
 
 //   SUBTASK ROUTES
