@@ -5,7 +5,7 @@ import { SubTask } from "../models/subTask.models.js";
 import { ApiResponse } from "../utils/api-response.js";
 import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 import { AvailableUserRole, UserRolesEnum } from "../utils/constants.js";
 
 const getTasks = asyncHandler(async (req, res) => {
@@ -137,11 +137,36 @@ const getTaskById = asyncHandler(async (req, res) => {
 });
 
 const updateTask = asyncHandler(async (req, res) => {
-  //test
+  const { taskId } = req.params;
+  const {title, description, status, assignedTo} = req.body
+  const task = await Task.findByIdAndUpdate(
+    taskId,
+    {
+      title,
+      description,
+      status,
+      assignedTo: new mongoose.Types.ObjectId(assignedTo)
+    }
+  )
+
+  if(!task){
+    throw new ApiError(404,"Task not found!")
+  }
+
+  return res.status(200).json(new ApiResponse(200,task,"Task updated successfully!"))
 });
 
 const deleteTask = asyncHandler(async (req, res) => {
-  //test
+  const {taskId} = req.params;
+  const task = await Task.findById(taskId);
+  if(!task){
+    throw new ApiError(404,"Task not found!")
+  }
+  await SubTask.deleteMany({task : task._id});
+  await task.deleteOne();
+
+  return res.status(200).json(new ApiResponse(200,null,"Task deleted sucessfully!"));
+
 });
 
 const createSubTask = asyncHandler(async (req, res) => {
