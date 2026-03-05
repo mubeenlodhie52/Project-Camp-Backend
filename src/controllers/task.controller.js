@@ -51,7 +51,7 @@ const createTask = asyncHandler(async (req, res) => {
       ? new mongoose.Types.ObjectId(assignedTo)
       : undefined,
     status,
-    assignedBy: new mongoose.Types.ObjectId(req.user_id),
+    assignedBy: new mongoose.Types.ObjectId(req.user._id),
     attachments,
   });
 
@@ -183,7 +183,7 @@ const createSubTask = asyncHandler(async (req, res) => {
       title,
       task : new mongoose.Types.ObjectId(taskId),
       isCompleted,
-      createdBy: new mongoose.Types.ObjectId(req.user_id)
+      createdBy: new mongoose.Types.ObjectId(req.user._id)
     }
   )
 
@@ -191,7 +191,22 @@ const createSubTask = asyncHandler(async (req, res) => {
 });
 
 const updateSubTask = asyncHandler(async (req, res) => {
-  //test
+  const {title,isCompleted} = req.body;
+  const {subtaskId} = req.params;
+  const subTask = await SubTask.findByIdAndUpdate(
+    subtaskId,
+    {
+      title,
+      isCompleted
+    },
+    {new:true}
+  )
+  if(!subTask){
+    throw new ApiError(404,"SubTask not found!")
+  }
+
+  res.status(200).json(new ApiResponse(200,subTask,"SubTask updated successfully!"))
+  
 });
 
 const deleteSubTask = asyncHandler(async (req, res) => {
