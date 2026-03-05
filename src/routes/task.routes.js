@@ -66,11 +66,11 @@ router.put(
   updateSubTask
 );
 
-// // DELETE subtask
-// router.delete(
-//   "/:taskId/subtasks/:subtaskId",
-//   validateProjectPermission([UserRolesEnum.ADMIN]),
-//   deleteSubTask
-// );
+
+router.delete(
+  "/:taskId/subtasks/:subtaskId",
+  validateProjectPermission([UserRolesEnum.ADMIN]),
+  deleteSubTask
+);
 
 export default router;
