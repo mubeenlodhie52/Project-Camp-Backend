@@ -59,12 +59,12 @@ router.post(
   createSubTask
 );
 
-// // UPDATE subtask
-// router.put(
-//   "/:taskId/subtasks/:subtaskId",
-//   validateProjectPermission(AvailableUserRole),
-//   updateSubTask
-// );
+
+router.put(
+  "/:taskId/subtasks/:subtaskId",
+  validateProjectPermission(AvailableUserRole),
+  updateSubTask
+);
 
 // // DELETE subtask
 // router.delete(
