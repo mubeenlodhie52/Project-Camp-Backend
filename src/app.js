@@ -5,6 +5,7 @@ import healthCheckRouter from "./routes/healthCheck.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import projectRouter from "./routes/project.routes.js";
 import taskRouter from "./routes/task.routes.js";
+import subtaskRouter from "./routes/task.routes.js";
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/api/v1/healthcheck", healthCheckRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/projects", projectRouter);
 app.use("/api/v1/projects/:projectId/tasks", taskRouter);
+app.use("/api/v1/projects/:projectId/tasks/:taskId/subtasks", subtaskRouter);
 
 app.get("/", (req, res) => {
     res.send("<h1>Hello Server!</h1>");
